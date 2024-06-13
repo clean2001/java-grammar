@@ -1,9 +1,12 @@
 package C01Basic;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class C11QueueStackDeque {
@@ -36,37 +39,34 @@ public class C11QueueStackDeque {
     // LinkedList
     LinkedList<Integer> linkedlist = new LinkedList<>();
     long startTime = System.currentTimeMillis();
-    for(int i=0; i<MAX_COUNT; ++i) {
+    for (int i = 0; i < MAX_COUNT; ++i) {
       linkedlist.add(0, 10);
     }
     long endTime = System.currentTimeMillis();
     System.out.println("linkedlist의 중간 삽입: " + (endTime - startTime));
 
-
     // ArrayList
     ArrayList<Integer> arraylist = new ArrayList<>();
     long startTime2 = System.currentTimeMillis();
-    for(int i=0; i<MAX_COUNT; ++i) {
+    for (int i = 0; i < MAX_COUNT; ++i) {
       arraylist.add(0, 10);
     }
     long endTime2 = System.currentTimeMillis();
     System.out.println("arraylist의 중간 삽입: " + (endTime2 - startTime2));
 
-
     // 조회 테스트
     // LinkedList
     LinkedList<Integer> linkedlist2 = new LinkedList<>();
     long startTime3 = System.currentTimeMillis();
-    for(int i=0; i<MAX_COUNT; ++i) {
+    for (int i = 0; i < MAX_COUNT; ++i) {
       linkedlist.get(i);
     }
     long endTime3 = System.currentTimeMillis();
     System.out.println("linkedlist의 조회: " + (endTime3 - startTime3));
 
-
     // ArrayList
     long startTime4 = System.currentTimeMillis();
-    for(int i=0; i<MAX_COUNT; ++i) {
+    for (int i = 0; i < MAX_COUNT; ++i) {
       arraylist.get(i);
     }
     long endTime4 = System.currentTimeMillis();
@@ -81,7 +81,7 @@ public class C11QueueStackDeque {
     myQueue.add("문서2");
     myQueue.add("문서3");
     myQueue.add("문서4");
-    while(!myQueue.isEmpty()) {
+    while (!myQueue.isEmpty()) {
       System.out.println(myQueue.poll());
     }
 
@@ -102,6 +102,8 @@ public class C11QueueStackDeque {
     System.out.println(abq);
 
     // 우선순위 큐: 데이터를 꺼낼 때 정렬된 데이터 pop
+    // PriorityQueue의 괄호 안에는 Comparator가 들어간다. (아무것도 없으면 오름차순)
+    // PriorityQueue: 전체 정렬이 아님. 요소를 꺼내는 시점에 가장 작인 값만 꺼내오는 것이다.
     Queue<Integer> pq = new PriorityQueue<>();
     pq.add(50);
     pq.add(30);
@@ -112,13 +114,68 @@ public class C11QueueStackDeque {
 
     System.out.println(pq);
 
-    while(!pq.isEmpty()) {
+    while (!pq.isEmpty()) {
       System.out.println(pq.poll());
     }
 
     // pq는 하나를 꺼낼때마다 logn이다. 다 꺼내면 NlogN ->
 
     // pq를 쓰는 경우 => 안에 들어있는 데이터가 **동적으로 바뀔때** priorityQueue를 쓴다.
-  }
 
+    //== Stack ==//
+    Stack<Integer> st = new Stack<>();
+
+    st.push(10);
+    st.push(20);
+    st.push(30);
+
+    System.out.println(st.pop()); // 10
+    System.out.println(st.peek()); // 20
+
+    // String 객체 5개 정도 Stack 추가 후에 while문을 통해 출력
+    Stack<String> st2 = new Stack<>();
+    st2.add("1");
+    st2.add("2");
+    st2.add("3");
+    st2.add("4");
+    st2.add("5");
+
+    while (!st2.isEmpty()) {
+      System.out.println(st2.pop());
+    }
+
+    //== 같은 숫자는 싫어 ==//
+    int[] arr = {1, 1, 3, 3, 0, 1, 1};
+    Stack<Integer> stack = new Stack<>();
+    for (int a : arr) {
+      if (stack.isEmpty()) {
+        stack.push(a);
+      } else {
+        if (stack.peek() != a) {
+          stack.push(a);
+        }
+
+      }
+    }
+    System.out.println(stack);
+    for(int a : stack) {
+      System.out.println(a);
+    }
+
+    //== Deque ==//
+
+    Deque<Integer> dq = new ArrayDeque<>();
+    dq.addLast(10);
+    dq.addLast(20);
+    System.out.println(dq);
+    dq.addFirst(30);
+    System.out.println(dq);
+
+    System.out.println(dq.peekLast());
+    System.out.println(dq.peekFirst());
+    System.out.println(dq.poll()); // pollFirst()와 같다.
+    System.out.println(dq.pop()); // pollLast()와 같다.
+
+    //== 다리를 지나는 트럭 ==//
+  }
 }

@@ -64,7 +64,7 @@ public class C09Map {
 
     // hasNext(): iterator 안에 값이 있는지 없는지 boolean return
     while(myIter.hasNext()) {
-      System.out.println(myIter.next());
+      System.out.println(myIter.next()); // 값을 하나 꺼내면서 없애버리는 것
     }
 
 

@@ -21,7 +21,7 @@ public class C10Set {
 //    System.out.println(mySet); // 중복 없음. 순서 없음
 
     //== List를 Set의 인자로 받을 수 있다. ==//
-    List<String> myList = new ArrayList<>();
+    List<String> myList = new ArrayList<>(); // 스프링에서 가장 많이 활용
     myList.add("tennis");
     myList.add("baseball");
     myList.add("basketball");
@@ -69,6 +69,7 @@ public class C10Set {
     System.out.println(set1);
 
     //== 관련 문제: 뉴스 클러스터링 ==// -> 관심있으면 풀어보기
+
     // set의 주된 목적: 중복 제거
 
 
