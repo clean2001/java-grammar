@@ -51,9 +51,9 @@ class Main {
     }
 
 
-    if(lower <= T && upper >= T) return 0;
+    if(lower <= T && upper >= T) return 0; // 가능
 
-    else if (lower > T) return -2;
+    else if (lower > T) return -2; // num을 줄여야함
     else return 2;
   }
 }
