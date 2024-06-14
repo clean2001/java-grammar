@@ -50,6 +50,7 @@ class Main {
       upper += num;
     }
 
+    System.out.println(num + " " + lower + " " + upper);
 
     if(lower <= T && upper >= T) return 0; // 가능
 
