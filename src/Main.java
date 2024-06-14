@@ -19,8 +19,8 @@ class Main {
     }
 
     int left = 0;
-    int right = 1_000_000;
-    int ans = right + 1;
+    int right = 1_000_001;
+    int ans = Integer.MAX_VALUE;
     while(left <= right) {
       int mid = (left + right) / 2;
 
@@ -34,7 +34,7 @@ class Main {
       }
     }
 
-    if (ans == 1_000_001) {
+    if (ans == Integer.MAX_VALUE) {
       ans = -1;
     }
     System.out.println(ans);
