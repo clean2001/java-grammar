@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class C0503ComparableComparator {
 
@@ -39,6 +41,7 @@ public class C0503ComparableComparator {
 //    System.out.println("내림차순: " + myList);
 //
 //    //== 또 다른 정렬 방법 ==//
+    // // sort() 메소드는 메소드 오버로딩이 돼있다. sort(), sort(Comparator c);
 //    myList.sort(Comparator.naturalOrder());
 //    myList.sort(Comparator.reverseOrder());
 
@@ -75,6 +78,7 @@ public class C0503ComparableComparator {
 
     Comparator<Student> myComparator2 = (c, d) -> c.getAge() - d.getAge();
 
+    // Comparator 인터페이스의 compare() 메소드의 내용
     list.sort((s1, s2) -> s1.getName().compareTo(s2.getName())); // 매개변수가 Comparator 객체로 정해져있음
     System.out.println("이름 오름차순(by 익명함수): " + list);
 
@@ -83,20 +87,29 @@ public class C0503ComparableComparator {
     Arrays.sort(stArr, (s1, s2) -> s2.length() - s1.length());
     System.out.println(Arrays.toString(stArr));
 
-    // 위 배열이 들어간 아래 리스트를 배열에 0번재가 아닌 1번째를 기준으로 내림차순 정렬
+    // 위 배열이 들어간 아래 리스트를 배열에 0번째가 아닌 1번째를 기준으로 내림차순 정렬
     List<int[]> myList = new ArrayList<>();
     myList.add(new int[] {4, 5});
     myList.add(new int[] {1, 2});
-    myList.add(new int[] {5, 0});
+    myList.add(new int[] {5, 5});
     myList.add(new int[] {3, 1});
-    myList.sort((l1, l2) -> l2[1] - l1[1]);
-    for(int[] arr : myList) {
-      System.out.println("[" + arr[0] + ", " + arr[1] + "]");
-    }
+//    myList.sort((l1, l2) -> l2[1] - l1[1]);
+//    for(int[] arr : myList) {
+//      System.out.println("[" + arr[0] + ", " + arr[1] + "]");
+//    }
+//    Comparator<int[]> myCom = new Comparator<int[]>() {
+//      @Override
+//      public int compare(int[] o1, int[] o2) {
+//        return 0;
+//      }
+//    };
+
 
     // 만약에 1번째가 같으면? => 0번째로 내림차순
     myList.add(new int[] {2, 1});
     myList.add(new int[] {3, 0});
+
+    // 익명 클래스를 구현할 때, 함수 내용이 2줄 이상이면
     myList.sort((l1, l2) -> {
       if(l1[1] == l2[1]) return (l2[0] - l1[0]);
 
@@ -106,13 +119,68 @@ public class C0503ComparableComparator {
     for(int[] arr : myList) {
       System.out.println("[" + arr[0] + ", " + arr[1] + "]");
     }
+
+    // 객체리스트.sort() => 이런 메소드 안에는 Comparator 객체를 무조건 넣어주어야한다!
+
+
+    String[] strArr = {"hello", "java", "C++", "world2"};
+    // Comparator를 받을 수 있도록 생성자 오버로딩이 되어있다.
+    Queue<String> pq = new PriorityQueue<>(Comparator.reverseOrder());
+    for(String s : strArr) {
+      pq.add(s);
+    }
+
+    pq.forEach(System.out::println);
+
+    System.out.println();
+    //== 글자 길이 내림차순 pq ==//
+    Queue<String> pq2 = new PriorityQueue<>((c, d) -> c.length() - d.length());
+    for(String s : strArr) {
+      pq2.add(s);
+    }
+
+    pq.forEach(System.out::println);
+
+
+    //== 쓰레드 생성 방법 ==//
+    // 1. 쓰레드 상속
+    // 2. Runnable 주입
+    //== 스레드와 Runnable 인터페이스 ==//
+    // Runnable 인터페이스: 쓰레드 구현
+    // 자바에서는 인위적으로 스레드를 만들어줘야한다.
+    // 스프링 프레임워크를 이용하면 톰캣이라는 프로그램이 알아서 해준다.
+    //== Runnable 객체(Runnable 인터페이스)를 이용 ==//
+
+    // 스레드를 생성하는 이유: 여러 사용자가 작업을 동시에 처리할 수 있도록
+    Thread t1 = new Thread(new Runnable() {
+      @Override
+      public void run() {
+        System.out.println("새로 생성한 쓰레드1입니다. 1");
+        System.out.println("새로 생성한 쓰레드1입니다. 2");
+        System.out.println("새로 생성한 쓰레드1입니다. 3");
+        System.out.println("새로 생성한 쓰레드1입니다. 4");
+      }
+    });
+    t1.start(); // 쓰레드가 시작
+
+
+    Thread t2 = new Thread(() -> System.out.println("새로 생성한 쓰레드2입니다."));
+    t2.start();
+
+    new Thread(() -> System.out.println("새로 생성한 쓰레드3입니다.")).start();
+    System.out.println("메인 쓰레드입니다.");
+
+
+
+    // 쓰레드: 논리적인 작업처리의 주체이다. => CPU 코어
+
   }
 }
 
 //class Student implements Comparable<Student> { // <> 안에 어떤 객체로 비교할지
 class Student { // <> 안에 어떤 객체로 비교할지
   private String name;
-  private int age;
+  public int age;
 
   public Student(String name, int age) {
     this.name = name;
@@ -150,8 +218,4 @@ class Student { // <> 안에 어떤 객체로 비교할지
 //  public int compareTo(Student o) {
 //    return o.getName().compareTo(this.name);
 //  }
-
-  //==  ==//
-
-
 }

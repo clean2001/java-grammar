@@ -44,17 +44,15 @@ class Main {
   private static int can(int num) {
     int lower = 0, upper = 0;
     for(int i=0; i<N; ++i) {
-      if(arr[i][0] > num)  return 1; // num을 늘려야함
+      if(arr[i][0] > num) return 1; // num을 늘려야함
 
-      lower += arr[i][0];
-      upper += num;
+      lower += arr[i][0]; //
+      upper += Math.min(num, arr[i][1]);
     }
-
-    System.out.println(num + " " + lower + " " + upper);
 
     if(lower <= T && upper >= T) return 0; // 가능
 
-    else if (lower > T) return -2; // num을 줄여야함
-    else return 2;
+    else if (lower > T) return -1; // num을 줄여야 함
+    else return 1; // num을 늘려야 함
   }
 }
