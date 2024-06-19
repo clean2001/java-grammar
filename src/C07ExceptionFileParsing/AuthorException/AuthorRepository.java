@@ -26,6 +26,28 @@ public class AuthorRepository {
     return Optional.empty();
   }
 
+
+  // 강사님이 피드백해주신 코드
+  public Optional<Author> findAuthorByEmail2(String email) {
+    Author ret = null;
+    for (Author author : authorList) {
+      if(email.equals(author.getEmail())) {
+        ret = author;
+        break;
+      }
+    }
+    return Optional.ofNullable(ret);
+  }
+
+  // findByEmail
+  public Optional<Author> findAuthorByEmail3(String email) {
+    return authorList.stream()
+        .filter(a -> email.equals(a.getEmail()))
+        .findFirst(); // 가장 간단한 코드
+  }
+
+
+  // 리스트 같은 경우는 Optional로 감싸지 않는다. List에는 아무것도 안들어 있을 수도 있는 거임
   public List<Author> findAllAuthors() {
     return new ArrayList<>(authorList);
   }

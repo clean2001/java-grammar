@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-public class AuthorService {
+public class
+AuthorService {
   private AuthorRepository authorRepository;
 
   public AuthorService() {
